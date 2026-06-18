@@ -1345,6 +1345,183 @@ body {
 /* ==========================================
    RESPONSIVE MEDIA QUERIES
    ========================================== */
+/* Sticky Sidebar for Composer (Desktop only) */
+@media (min-width: 993px) {
+    .composer-section {
+        position: sticky;
+        top: 2rem;
+        height: calc(100vh - 120px);
+    }
+}
+
+/* Search suggestions */
+.control-bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+}
+
+.control-bar-wrapper .control-bar {
+    margin-bottom: 0;
+}
+
+.search-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.suggestion-label {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.suggestion-pill {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.15rem 0.5rem;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.suggestion-pill:hover {
+    background-color: var(--bg-card-hover);
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+}
+
+/* Back to top button */
+.back-to-top-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--accent-primary);
+    color: #ffffff;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(58, 189, 248, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: all var(--transition-normal);
+    z-index: 99;
+}
+
+.back-to-top-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.back-to-top-btn:hover {
+    background-color: var(--accent-primary-hover);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 6px 16px rgba(58, 189, 248, 0.4);
+}
+
+/* Search Highlighting */
+mark.search-highlight {
+    background-color: rgba(245, 158, 11, 0.3);
+    color: inherit;
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+/* Composer Helpers buttons */
+.composer-helper-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.composer-helper-action-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.725rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: all var(--transition-fast);
+}
+
+.composer-helper-action-btn:hover {
+    background-color: var(--bg-card-hover);
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+}
+
+.composer-helper-action-btn.danger {
+    color: var(--color-deprecation);
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+.composer-helper-action-btn.danger:hover {
+    background-color: var(--bg-deprecation);
+    border-color: var(--color-deprecation);
+}
+
+/* Copy dropdown styling inside card footer */
+.dropdown.copy-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 0.5rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    z-index: 10;
+    min-width: 110px;
+    overflow: hidden;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown.copy-dropdown:hover .dropdown-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-item {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.775rem;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.dropdown-item:hover {
+    background-color: var(--bg-card-hover);
+    color: var(--text-primary);
+}
+
 @media (max-width: 992px) {
     .main-content {
         grid-template-columns: 1fr;
