@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
     const feedList = document.getElementById('feed-list');
     const refreshBtn = document.getElementById('refresh-btn');
+    const exportBtn = document.getElementById('export-btn');
     const searchInput = document.getElementById('search-input');
     const categoryFilters = document.getElementById('category-filters-container');
     const lastFetchedText = document.getElementById('last-fetched-text');
@@ -61,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event Listeners
     refreshBtn.addEventListener('click', () => fetchReleaseNotes(true));
+    exportBtn.addEventListener('click', exportToCSV);
     searchInput.addEventListener('input', debounce(handleSearch, 200));
     resetSearchBtn.addEventListener('click', clearFilters);
     clearFiltersBtn.addEventListener('click', clearFilters);
@@ -499,6 +501,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // UTILITY FUNCTIONS
     // ==========================================
     
+    function exportToCSV() {
+        if (filteredNotes.length === 0) {
+            showToast('No data available to export', 'error');
+            return;
+        }
+
+        let csvContent = "Date,Category,Content\n";
+
+        filteredNotes.forEach(note => {
+            const dateEscaped = `"${note.date.replace(/"/g, '""')}"`;
+            const categoryEscaped = `"${note.category.replace(/"/g, '""')}"`;
+            const textEscaped = `"${note.content_text.replace(/"/g, '""')}"`;
+            csvContent += `${dateEscaped},${categoryEscaped},${textEscaped}\n`;
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        
+        let filename = "bigquery_release_notes";
+        if (currentCategory !== 'all') {
+            filename += `_${currentCategory}`;
+        }
+        if (searchQuery) {
+            filename += `_search`;
+        }
+        filename += ".csv";
+        
+        link.setAttribute("href", url);
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        
+        showToast(`Exported ${filteredNotes.length} notes to CSV`, 'success');
+    }
+
     // Debounce function for input searching
     function debounce(func, wait) {
         let timeout;
